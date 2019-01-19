@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Answer.cs" />
+    <Compile Include="Calculator.cs" />
+    <Compile Include="DivisionString.cs" />
+    <Compile Include="Output.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
