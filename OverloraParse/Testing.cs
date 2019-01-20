@@ -69,18 +69,26 @@ namespace OverloraParse
 
    class Test
     {
-        //Hop hey lalaley
         static void Main(string[] args)
         {
-            string a = "1+2/3*4-5";
-            string[] numbers = Regex.Split(a, @"[-+*/]");
-            int x = int.Parse(numbers[0]);
-            string[] operators = Regex.Split(a, @"[0-9]");
+            string a = "8*5-20/10";
+            a = a.Replace(',', '.');
             string pattern = @"[-+*/]";
+            string[] numbers = Regex.Split(a, pattern);
+            int x = int.Parse(numbers[0]);
+            //string[] operators = Regex.Split(a, @"[0-9]");
 
-            for(int i = 1, j = 0; i < numbers.Length & j < operators.Length ; i ++, j ++)
+            string realoperators = "";
+            foreach (char w in a)
             {
-                string expression = $@"{x}{operators[j]}{numbers[i]}";
+                if (w == '+' || w == '-' ||
+                    w == '*' || w == '/')
+                     realoperators += w;
+            }
+
+            for(int i = 1, j = 0; i < numbers.Length & j < realoperators.Length ; i ++, j ++)
+            {
+                string expression = $@"{x}{realoperators[j]}{numbers[i]}";
                 string[] splitter = Regex.Split(expression, pattern);
 
                 foreach (Match match in Regex.Matches(expression, pattern))
