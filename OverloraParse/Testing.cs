@@ -71,22 +71,33 @@ namespace OverloraParse
     {
         static void Main(string[] args)
         {
-            string a = "8*5-20/10";
-            a = a.Replace(',', '.');
+            string a = Console.ReadLine();
+            a = a.Replace('.', ',');
+
             string pattern = @"[-+*/]";
             string[] numbers = Regex.Split(a, pattern);
-            int x = int.Parse(numbers[0]);
-            //string[] operators = Regex.Split(a, @"[0-9]");
+            string[] operators = Regex.Split(a, @"[0-9]");
 
-            string realoperators = "";
-            foreach (char w in a)
+            int lengthRealoperators = numbers.Length - 1;
+            int len = operators.Length;
+
+            string[] realoperators = new string[lengthRealoperators];
+
+            for (int i = 0, j = 0; i < len & j < lengthRealoperators; i++)
             {
-                if (w == '+' || w == '-' ||
-                    w == '*' || w == '/')
-                     realoperators += w;
+                if (operators[i] == "+" ||
+                    operators[i] == "-" ||
+                    operators[i] == "*" ||
+                    operators[i] == "/")
+                {
+                    realoperators[j] = operators[i];
+                    j++;
+                }
             }
 
-            for(int i = 1, j = 0; i < numbers.Length & j < realoperators.Length ; i ++, j ++)
+            double x = double.Parse(numbers[0]);
+
+            for (int i = 1, j = 0; i < numbers.Length & j < realoperators.Length ; i ++, j ++)
             {
                 string expression = $@"{x}{realoperators[j]}{numbers[i]}";
                 string[] splitter = Regex.Split(expression, pattern);
@@ -96,16 +107,16 @@ namespace OverloraParse
                     switch (match.Value)
                     {
                         case "+":
-                            x += int.Parse(numbers[i]);
+                            x += double.Parse(numbers[i]);
                             break;
                         case "-":
-                            x -= int.Parse(numbers[i]);
+                            x -= double.Parse(numbers[i]);
                             break;
                         case "*":
-                            x *= int.Parse(numbers[i]);
+                            x *= double.Parse(numbers[i]);
                             break;
                         case "/":
-                            x /= int.Parse(numbers[i]);
+                            x /= double.Parse(numbers[i]);
                             break;
                     }
                 }
