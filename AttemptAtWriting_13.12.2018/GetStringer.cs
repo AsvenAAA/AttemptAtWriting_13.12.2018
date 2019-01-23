@@ -20,7 +20,7 @@ namespace AttemptAtWriting_13._12._2018
             {
                 if (inputExpression == null)
                     Console.WriteLine("Please enter an expression or close the programm (q)");
-                inputExpression = value;
+                inputExpression = value.Replace('.', ',');
             }
         }
         public double MainVarieble
@@ -51,36 +51,50 @@ namespace AttemptAtWriting_13._12._2018
 
         public void DivisionSt(/*string[] numbers, string[] operators*/)
         {
-            //string pattern = @"[-+*/]";
-
             string pattern = @"[-+*/]";
-
+            
             string[] numbers = Regex.Split(InputExpression, pattern);
-            int x = int.Parse(numbers[0]);
-            string[] operators = new string[] { "+", "/", "*", "-" };
+            double x = double.Parse(numbers[0]);
+            string[] operators = Regex.Split(InputExpression, @"[0-9]");
+
+            int lengthRealoperators = numbers.Length - 1;
+            int len = operators.Length;
+
+            string[] realoperators = new string[lengthRealoperators];
+
+            for (int i = 0, j = 0; i < len & j < lengthRealoperators; i++)
+            {
+                if (operators[i] == "+" ||
+                    operators[i] == "-" ||
+                    operators[i] == "*" ||
+                    operators[i] == "/")
+                {
+                    realoperators[j] = operators[i];
+                    j++;
+                }
+            }
             //int x = int.Parse(DistinguishNumbers()[0]);
 
             for (int i = 1, j = 0; i < 5 & j < 4; i++, j++)
             {
-                string expression = $@"{x}{operators[j]}{numbers[i]}";
+                string expression = $@"{x}{realoperators[j]}{numbers[i]}";
                 string[] splitter = Regex.Split(expression, pattern);
-
 
                 foreach (Match match in Regex.Matches(expression, pattern))
                 {
                     switch (match.Value)
                     {
                         case "+":
-                            x += int.Parse(numbers[i]);
+                            x += double.Parse(numbers[i]);
                             break;
                         case "-":
-                            x -= int.Parse(numbers[i]);
+                            x -= double.Parse(numbers[i]);
                             break;
                         case "*":
-                            x *= int.Parse(numbers[i]);
+                            x *= double.Parse(numbers[i]);
                             break;
                         case "/":
-                            x /= int.Parse(numbers[i]);
+                            x /= double.Parse(numbers[i]);
                             break;
                     }
                 }
